@@ -1,0 +1,28 @@
+add wave -position insertpoint  \
+sim:/spi/clk \
+sim:/spi/reset \
+sim:/spi/w_data \
+sim:/spi/w_adr \
+sim:/spi/spi_tx_inst/data_in \
+sim:/spi/tx_set_flag \
+sim:/spi/spi_tx_inst/tx_start \
+sim:/spi/tx_empty \
+sim:/spi/wire_tx_clr_flag \
+#sim:/spi/rx_empty \
+#sim:/spi/rx_clr_flag \
+sim:/spi/spi_tx_inst/count_reg \
+sim:/spi/spi_sdi \
+sim:/spi/spi_tx_inst/state_reg \
+sim:/spi/spi_clk \
+sim:/spi/spi_cs
+#
+force -freeze sim:/spi/clk 1 0, 0 {10000 ps} -r {20 ns}
+#
+run 40 ns
+#
+force -freeze sim:/spi/w_adr 10 0
+force -freeze sim:/spi/w_data 01011110 0
+force -freeze sim:/spi/tx_set_flag 1 0
+run 20 ns
+force -freeze sim:/spi/tx_set_flag 0 0
+run 2000 ns
